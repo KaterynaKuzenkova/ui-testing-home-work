@@ -9,11 +9,12 @@ public class SignInPage {
     public SelenideElement passwordInputField = $("#password-input");
     public SelenideElement signInButton = $("#submit-button");
 
-    public void signIn(String email, String password){
+    public void signIn(String email, String password) {
         emailInputField.setValue(email);
         passwordInputField.setValue(password);
     }
-    public void clickSihnInButton(){
+
+    public void clickSihnInButton() {
         signInButton.click();
     }
 }

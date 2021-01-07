@@ -10,13 +10,15 @@ public class ModalWindowPage {
     public SelenideElement signInButton = $(byClassName("id4-cta-signin id4-cta-button"));
     public SelenideElement maybeLaterButton = $(byClassName("sign_in-exit"));
 
-    public void clickRegisterButton(){
+    public void clickRegisterButton() {
         registerButton.click();
     }
-    public void clickSignInButton(){
+
+    public void clickSignInButton() {
         signInButton.click();
     }
-    public void clickMaybeLaterButton(){
+
+    public void clickMaybeLaterButton() {
         maybeLaterButton.click();
     }
 }

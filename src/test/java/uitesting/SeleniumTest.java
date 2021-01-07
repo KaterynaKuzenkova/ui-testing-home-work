@@ -63,22 +63,23 @@ public class SeleniumTest {
         registrationPage.registerNewUser("111test@mailforspam.com", "qwery12345", "Ukraine");
         registrationPage.clickRegisterButton();
     }
+
     @Test
-    public void checkIfUserCanSignInWithCorrectCredentials(){
+    public void checkIfUserCanSignInWithCorrectCredentials() {
         open(baseUrl);
         modalWindowPage.clickSignInButton();
         signInPage.signIn("111test@mailforspam.com", "qwery12345");
         signInPage.clickSihnInButton();
 
     }
+
     @Test
-    public void selectFirstArticleFromGroup3ListTravelSection(){
+    public void selectFirstArticleFromGroup3ListTravelSection() {
         open(baseUrl);
         modalWindowPage.clickMaybeLaterButton();
         homePage.clickTravelSectionButton();
 
     }
-
 
 
 }

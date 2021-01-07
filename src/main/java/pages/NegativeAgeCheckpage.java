@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class NegativeAgeCheckpage {
     public SelenideElement negativeResult = $(byXpath("//span[contains(text(),'Sorry, only 16s and over can register outside the ')]"));
 
-    public void negativeAnswerIsVisible(){
-negativeResult.should(Condition.appear);
+    public void negativeAnswerIsVisible() {
+        negativeResult.should(Condition.appear);
     }
 }

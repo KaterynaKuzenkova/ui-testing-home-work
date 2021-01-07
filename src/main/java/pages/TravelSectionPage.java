@@ -11,8 +11,8 @@ public class TravelSectionPage {
     public SelenideElement secondPartArticles = $(byClassName("article-list article-list-group-2 "));
     public SelenideElement thirdPartArticles = $(byClassName("article-list article-list-group-3"));
 
-    public void selectFirstArticleFromTheListOfGroup3(){
-        thirdPartArticles.waitUntil(Condition.visible,60000);
+    public void selectFirstArticleFromTheListOfGroup3() {
+        thirdPartArticles.waitUntil(Condition.visible, 60000);
 
 
     }

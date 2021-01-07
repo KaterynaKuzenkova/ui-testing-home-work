@@ -23,7 +23,8 @@ public class PositiveAgeCheckPage {
     public void clickContinueButton() {
         continueButton.click();
     }
-    public void negativeAnswerIsVisible(){
+
+    public void negativeAnswerIsVisible() {
         negativeAnswer.should(Condition.appear);
     }
 }
