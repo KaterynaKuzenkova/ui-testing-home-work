@@ -1,24 +1,27 @@
 package uitesting;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.*;
 
-import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import com.codeborne.selenide.testng.ScreenShooter;
-
+import static pages.HomePage.baseUrl;
 
 
 public class SeleniumTest {
-    private String baseUrl = "https://www.bbc.com/";
-    int registerEmailAddress = 0;
-    int registerPassword = 111;
+    HomePage homePage = new HomePage();
+    ModalWindowPage modalWindowPage = new ModalWindowPage();
+    CheckAgePage checkAgePage = new CheckAgePage();
+    NegativeAgeCheckpage negativeAgeCheckpage = new NegativeAgeCheckpage();
+    PositiveAgeCheckPage positiveAgeCheckPage = new PositiveAgeCheckPage();
+    RegistrationPage registrationPage = new RegistrationPage();
+    TravelSectionPage travelSectionPage = new TravelSectionPage();
+    SignInPage signInPage = new SignInPage();
+
     @BeforeAll
     static void setupAllureReports() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
@@ -26,55 +29,56 @@ public class SeleniumTest {
                 .savePageSource(true)
         );
     }
+
     @BeforeTest
     public void setUp() {
         ScreenShooter.captureSuccessfulTests = true;
     }
 
     @Test
-    public void userUnder16IsNotRegistered() {
+    public void checkIfUserUnder16IsNotRegistered() {
         open(baseUrl);
-        $(byClassName("id4-cta-register")).should(visible).click();
-        $(byXpath("//*[@id=\"container\"]/div/div/div/div[2]/div[2]/div[2]/div/div[3]/fieldset/div[1]/a[1]/span")).should(visible).click();
-        $(byXpath("//*[@id=\"container\"]/div/div/div/div[2]/div[2]/div[2]/div/p")).should(appear);
+        modalWindowPage.clickRegisterButton();
+        checkAgePage.clickUnder16Button();
+        negativeAgeCheckpage.negativeAnswerIsVisible();
     }
 
     @Test
-    public void userWithYearDateUnder16IsNotRegistered() {
+    public void checkIfUserWithYearDateUnder16IsNotRegistered() {
         open(baseUrl);
-        $(byClassName("id4-cta-register")).should(visible).click();
-        $(byXpath("//*[@id=\"container\"]/div/div/div/div[2]/div[2]/div[2]/div/div[3]/fieldset/div[1]/a[2]/span")).should(visible).click();
-        $("#day-input").shouldBe(visible).setValue("01");
-        $("#month-input").shouldBe(visible).setValue("01");
-        $("#year-input").shouldBe(visible).setValue("2007");
-        $("#submit-button").click();
-
-        $("#form-message-dateOfBirth").should(appear);
+        modalWindowPage.clickRegisterButton();
+        checkAgePage.clickOver16Button();
+        positiveAgeCheckPage.enterUserBirthDate("01", "12", "2006");
+        positiveAgeCheckPage.clickContinueButton();
+        positiveAgeCheckPage.negativeAnswerIsVisible();
     }
 
     @Test
-    public void userWithYearDateOver16IsRegistered() {
+    public void checkIfUserWithYearDateOver16IsRegistered() {
         open(baseUrl);
-        $(byClassName("id4-cta-register")).should(visible).click();
-        $(byXpath("//*[@id=\"container\"]/div/div/div/div[2]/div[2]/div[2]/div/div[3]/fieldset/div[1]/a[2]/span")).should(visible).click();
-        $("#day-input").shouldBe(visible).setValue("01");
-        $("#month-input").shouldBe(visible).setValue("01");
-        $("#year-input").shouldBe(visible).setValue("1990");
-        $("#submit-button").click();
+        modalWindowPage.clickRegisterButton();
+        checkAgePage.clickOver16Button();
+        positiveAgeCheckPage.enterUserBirthDate("20", "01", "1996");
+        positiveAgeCheckPage.clickContinueButton();
+        registrationPage.registerNewUser("111test@mailforspam.com", "qwery12345", "Ukraine");
+        registrationPage.clickRegisterButton();
+    }
+    @Test
+    public void checkIfUserCanSignInWithCorrectCredentials(){
+        open(baseUrl);
+        modalWindowPage.clickSignInButton();
+        signInPage.signIn("111test@mailforspam.com", "qwery12345");
+        signInPage.clickSihnInButton();
 
-        registerEmailAddress = registerEmailAddress + 1;
-        registerPassword = registerPassword + 1;
-        $("#user-identifier-input").should(visible).setValue(registerEmailAddress + "example@gmail.com");
-        $("#password-input").setValue(registerPassword + "qwery");
-        $("#location-select").selectOptionContainingText("Italy");
-        $("#submit-button").click();
-        $(byXpath("//*[@id=\"container\"]/div/div/div/div[2]/div[2]/div[2]/div/h1")).should(appear);
+    }
+    @Test
+    public void selectFirstArticleFromGroup3ListTravelSection(){
+        open(baseUrl);
+        modalWindowPage.clickMaybeLaterButton();
+        homePage.clickTravelSectionButton();
+
     }
 
-//    @Test
-//    public void checkIfUserCanSighInWithValidData() {
-//        open(baseUrl);
-//        $("#idcta-link").should(visible).click();
-//        $("#user-identifier-input").should(visible).setValue("");
-//    }
+
+
 }
