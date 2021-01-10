@@ -25,6 +25,6 @@ public class PositiveAgeCheckPage {
     }
 
     public void negativeAnswerIsVisible() {
-        negativeAnswer.should(Condition.appear);
+        negativeAnswer.shouldHave(Condition.text("Sorry, only 16s and over can register outside the UK"));
     }
 }

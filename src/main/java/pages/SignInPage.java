@@ -14,7 +14,7 @@ public class SignInPage {
         passwordInputField.setValue(password);
     }
 
-    public void clickSihnInButton() {
+    public void clickSignInButton() {
         signInButton.click();
     }
 }

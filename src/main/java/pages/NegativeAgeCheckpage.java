@@ -10,6 +10,6 @@ public class NegativeAgeCheckpage {
     public SelenideElement negativeResult = $(byXpath("//span[contains(text(),'Sorry, only 16s and over can register outside the ')]"));
 
     public void negativeAnswerIsVisible() {
-        negativeResult.should(Condition.appear);
+        negativeResult.shouldHave(Condition.text("Sorry, only 16s and over can register outside the UK"));
     }
 }
